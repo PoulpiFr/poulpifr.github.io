@@ -2,7 +2,7 @@
 layout: post
 title: "SynCount, une question de design"
 date: 2013-11-29 09:22
-header-img: "img/design.jpg"
+header-img: "img/design.png"
 author: "poulpi"
 ---
 

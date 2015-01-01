@@ -14,7 +14,7 @@ Bon alors c'est très joli ces paroles en l'air mais si ce n'est pas accompagné
 
 Mais avant ça, je pense qu'il faut expliquer pourquoi ce post arrive presque 6 mois après le précédent : tout simplement à cause de la gestion de mon identité numérique où je me suis laissé embarqué dans le raisonnement du "minimiser sa présence numérique, c'est mieux la contrôler". Alors voilà, l'idée est de se dire que moins on donne le fer pour se faire battre et moins on est censé être discriminé d'un point de vue professionnel si on ne colle pas tout à fait au sacro saint esprit **corporate**.
 
-Il y a donc une peur d'exister de manière trop visible, de sortir un peu trop des rangs et à la place on préfère se lisser, se mettre dans le fond de la pièce en regardant ses pieds pour passer innaperçu. Cela s'exprime tout particulièrement avec le sujet de l'identité numérique mais c'est une problématique bien plus large que ça. Mais en 2015, j'ai décidé de tout faire pour ne pas laisser ce genre considérations inhiber la personne que je suis et ce que je voudrais faire. 
+Il y a donc une peur d'exister de manière trop visible, de sortir un peu trop des rangs et à la place on préfère se lisser, se mettre dans le fond de la pièce en regardant ses pieds pour passer inaperçu. Cela s'exprime tout particulièrement avec le sujet de l'identité numérique mais c'est une problématique bien plus large que ça. Mais en 2015, j'ai décidé de tout faire pour ne pas laisser ce genre considérations inhiber la personne que je suis et ce que je voudrais faire. 
 
 Concernant l'activité de blogging, j'ai de nouvelles prises de position en 2015 :
 
@@ -24,6 +24,6 @@ Concernant l'activité de blogging, j'ai de nouvelles prises de position en 2015
 
 Bref, la première personne du singulier va sans doute prendre une part plus importante dans les mois qui viennent. Je ne compte pas non plus raconter ma vie (certains me diront que je le fais déjà ailleurs ^^) mais je vais davantage m'impliquer dans mes billets.
 
-Sinon comme tu l'auras sans doute remarqué cher lecteur, le design du blog a pas mal changé, son moteur et son hébergement aussi (mais ça tu peux pas le voir :wink:). Pourquoi ? Tout simplement un besoin de changement pour incarner les positions vues précédemment. Le nouveau blog autorise également une édition "online" ce qui signifie que je vais pouvoir jouer avec depuis n'importe où et notamment en déplacement (mon côté jeune cadre dynamique mobile).
+Sinon comme tu l'auras sans doute remarqué cher lecteur, le design du blog a pas mal changé, son moteur et son hébergement aussi (mais ça tu peux pas le voir !). Pourquoi ? Tout simplement un besoin de changement pour incarner les positions vues précédemment. Le nouveau blog autorise également une édition "online" ce qui signifie que je vais pouvoir jouer avec depuis n'importe où et notamment en déplacement (mon côté jeune cadre dynamique mobile).
 
 Bref, tu peux remettre ce blog dans tes favoris, ça va blogger !

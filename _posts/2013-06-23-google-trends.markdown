@@ -2,7 +2,7 @@
 layout: post
 title: "Google Trends"
 date: 2013-06-23 21:49
-header-img: "img/kitten.jpg"
+header-img: "img/banana.jpg"
 author: "poulpi"
 ---
 
