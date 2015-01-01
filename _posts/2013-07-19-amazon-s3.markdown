@@ -1,0 +1,122 @@
+---
+layout: post
+title: "Ce blog est désormais sur Amazon S3"
+date: 2013-07-19 02:16
+header-img: "img/clouds.jpg"
+author: "poulpi"
+---
+
+Après avoir été hébergé sur un raspberry Pi pour tester un peu ce qui était possible de faire avec Octopress et avoir vite 
+fait succombé à l'essai de CloudFare comme CDN, *poulpiBlog* est maintenant dans le cloud. Big time #top#
+
+Reprenons dès le début pour les moins technophiles d'entre vous :
+
+##C'est quoi Octopress ?
+
+Alors c'est le moteur de ce blog. C'est un ensemble de scripts Ruby (un langage assez nouveau qui a l'air à la mode) qui permet 
+de faire rapidement des pages HTML d'un blog à partir de fichiers texte.
+
+En gros j'écris un billet dans le bloc note, je fais tourner le programme sur mon PC et paf j'ai les fichiers HTML tout beaux 
+tout propres. On peut bien sûr s'amuser à changer le code du programme pour qu'il fasse un blog plus stylé et c'est ce que j'ai fait en rajoutant les smileys et en améliorant le design.
+
+###Mais en quoi c'est différent des autres moteurs de blogs en fait ?
+
+Alors les autres moteurs de blogs vont avoir besoin de stocker les textes des billets dans des bases de données et vont générer 
+les fichiers HTML à chaque visite en fonction de la base de données. C'est sympa mais c'est lourd pour le serveur qui refait pas mal de fois la même chose en fait.
+
+Si on veut mettre un blog sur un raspberry Pi, c'est pas le bon plan : le Pi faut le considérer comme ton copain asmathique, tu fais pas d'Iron man avec lui ...
+
+Bon sauf que en fait c'est un peu compliqué à mettre en place et à customiser donc c'est pour ça que y'a presque que des codeurs
+ qui utilisent Octopress. Les non-geeks iront sur Tumblr ou sur des hébergeurs de Wordpress.
+ 
+###Et comment tu héberges tes pages HTML ?
+
+Alors pour héberger des pages HTML c'est très simple, n'importe quel serveur peut le faire. 
+
+- On peut aller vers des serveurs gratuits (genre l'espace web offert par votre fournisseur d'accès). En règle générale avec ce
+ genre de services est vite horrible si vous voulez utiliser un des moteurs dynamiques avec base de données à cause des restrictions 
+ du manque de puissance et de la faible bande passante. Mais c'est gérable si on veut juste mettre du HTML déjà généré comme ici. *poulpi.fr* 
+ a ainsi été hébergé sur les serveurs d'OVH durant les tout premiers jours.
+
+- On peut utiliser son propre serveur. Ça pose différents problèmes. Déjà il faut avoir un PC qui puisse rester allumé 7j/7 et qui 
+ne plante pas. Ça c'est dur pour un particulier. Heureusement j'avais un raspberry Pi pour ça. Mais il faut aussi savoir configurer 
+le serveur (dessus on met **linux** dans la plupart des cas). Et pour finir on reste dépendant de la vitesse de votre connexion et des aléas de 
+la vie (genre coupure d'électricité). C'est comme ça que *poulpi.fr* a tourné. Mais je vais déménager et j'ai pas envie de me prendre la tête ni
+ de perdre le blog pendant quelques jours.
+
+- Pour finir, on peut aller vers des offres payantes : 
+
+	- Dans certains cas on a des serveurs qu'on loue chaque mois. En gros y'a une machine quelque part dans un grand datacenter 
+	qui devient votre propre serveur. C'est cool mais on paye ça assez cher (10-20€/mois pour un blog comme ici) et surtout on a une petite
+	machine qu'il faut améliorer si on a du trafic, mettre plus de mémoire si on a plein d'images, etc. 
+
+	- Sinon on passe dans le cloud. C'est à dire qu'on a un site avec un espace illimité qui peut prendre un nombre de visiteurs illimités.
+	En gros on est dans un datacenter avec pleins de machines qui gèrent les ressources du site en fonction de la demande. Et niveau facturation
+	c'est la même chose, on paye à la consommation. Donc si tu as 3 visiteurs, tu ne payes quasi rien (moins d'un euro par mois). Si tu en as 15 000 tu payes plus cher. C'est génial
+	pour les petits sites qui n'ont pas budget, et c'est génial pour les boites ou les start up qui n'ont pas à avoir peur de leur croissance.
+
+##Le cloud, c'est sympa.
+
+Prenons un site WEB assez connu : Facebook. Lors de sa création il y avait peut être 500 inscrits et 100 visiteurs journaliers. Aujourd'hui 
+on compte en centaines de millions. Entre temps il a fallu acheter pleins de serveurs de plus en plus puissants, arriver à les paramétrer, à construire des
+ datacenters, etc. C'est le genre de truc que tu veux pas faire lorsque tu montes un site ou une boite.
+
+Si Facebook avait été sur le cloud, c'est les gérants du cloud qui auraient géré tout ça et Zuckeberg n'aurait rien eu à faire que de voir des gens arriver dessus.
+
+C'est en ça que le cloud c'est sympa.
+
+##Mais c'est qui le cloud ?
+
+Bon vous l'avez compris, un cloud c'est avant tout pleins de PCs dans un grand batiment. Et qui a pleins de PCs dans des grands batîments ? Les grosses boites informatiques.
+
+Donc aujourd'hui on va trouver (liste non exhaustive) : Amazon, Microsoft, Apple, Google, Synaptic. Alors ces boites ont différents positionnements. 
+Par exemple Apple et Google sont plutôt axés sur la mise sur le cloud de vos données personnelles (photos, musiques, mails, etc.) alors que les autres vous 
+laissent mettre n'importe quoi dessus.
+
+Alors j'ai choisi Amazon parce que c'est le plus documenté sur internet.
+
+##Amazon, mais qui est dessus ?
+
+Est ce que vous connaissez Dropbox ? Sans doute. Dropbox stocke tout chez Amazon. Comme ça pas de peur d'arriver à la fin du disque dur et de devoir en 
+acheter un nouveau pour Dropbox, c'est Amazon qui gère ça.
+
+En fait le business de Dropbox c'est de développer une super interface à celle d'Amazon et de la facturer super cher. Pour info c'est à peu près 2 fois plus cher sur Dropbox que sur Amazon.
+
+Et ça c'est en considérant que Dropbox a pris l'option de stockage la plus sûre d'Amazon (en gros les données sont copiées sur pleins de disques durs 
+donc Amazon s'engage à ne pas les perdre). Mais beaucoup de gens soupçonnent Dropbox de prendre de l'espace moins protégé bien moins cher.
+
+Donc en gros Dropbox double les prix d'Amazon. Et qu'est ce qu'ils offrent d eplus ? Un jolie interface et un client Windows. Ces mecs sont des génies :p
+
+Bon dans les gros clients d'Amazon on va retrouver Twitter, Tumblr, 9gag, etc. Bref tout els gros sites qui ne veulent pas acheter pleins de serveurs.
+
+##Amazon, comment ça marche
+
+Alors on commence par se créer un compte. Direct on sent que c'est très pro. On commence par te demander si tu es une société pour savoir si on te met 
+la TVA. Ensuite pour vérifier ton numéro, on t'appele sur ton portable. Non, pas de SMS, on t'appelles pour de vrai et on te demande un code qui s'affiche
+ sur ton écran de PC. *Welcome in our world*. Par contre la meuf te parle en anglais, dommage pour les non-anglophones.
+
+Directement on te demande si tu veux utiliser une double authentification, et je réponds, oui ! C'est comme pour Google, sur un PC non autorisé (ie pas le 
+tien) quand tu te connectes, on te demande ton mot de passe et une clef aléatoire générée par une application sur ton téléphone (le code change toutes les 30 secondes).
+
+Donc si un jour on trouve mon mot de passe, il faut aussi voler mon téléphone ou utiliser mon PC pour se connecter, plus dur.
+
+En fait il y a un service entier dédié à la gestion des profils utilisateurs, à leur rôles, leurs droits, etc. Très pro. D'un point de vue perso je n'en 
+utiliserai que 1% des capacités (je fais 1 user qui a tout les droits sur le stockage et point barre) mais pour une boite ou si tu veux donner des droits différents à différents programmes
+ que tu fais c'est juste parfait.
+
+Bon très vite on arrive au choix de la multitude de services proposés. Y'en a pleins, et pour une bonne partie je ne sais même pas à quoi ils servent vraiment.
+
+Mais pour héberger des fichiers, c'est avec Amazon S3 qu'il faut voir (c'est le service de stockage). Donc on y va. On nous demande de faire un "bucket",
+ ok. Et paf on peux rajouter des fichiers dedans ! Avec une gestion fine des permissions (pour le blog tout le monde a les droits en lecture).
+
+##Bon, comment on fait automatiser tout ça ?
+
+Alors oui, ce que j'aimerais c'est qu'à chaque déploiement du site je n'ai pas à rajouter les fichiers à la main. Pour ça il y a un équivalent à rsync 
+nommé s3cmd qui a été codé par la communauté. J'ai essayé la version 1.5 et elle ne fonctionnait pas, donc au final je tourne en version 1.0 (elle a 2 ans mais elle marche !).
+
+Y'a pleins de sources pour dire comment configurer tout ça donc je ne m'éterniserais pas dessus. Je dirais juste qu'avec Windows on en chie un peu avec 
+les problèmes d'encodage (enfin on en chie même beaucoup ...).
+
+Bon le tout est encore relié à CloudFare parce que CloudFront (l'équivalent chez Amazon) est payant et que voilà quoi ...
+
+**TL;DR : Welcome to the cloud !**

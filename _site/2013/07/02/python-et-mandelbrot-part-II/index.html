@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Un blog qui parle de châtons, de code, enfin de la vie quoi !">
+
+    <title>Mandelbrot et Python : Part II (Optimisation) - poulpiBlog</title>
+
+    <link rel="canonical" href="http://poulpi.fr/2013/07/02/python-et-mandelbrot-part-II/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- mathjax config similar to math.stackexchange -->
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+    <script type="text/javascript"
+       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poulpiBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">A propos</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/monkey_thinking.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Mandelbrot et Python : Part II (Optimisation)</h1>
+                    
+                    <span class="meta">Posté par poulpi le 02/07/13</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>Alors dans mon billet précédent je vous parlais de ma découverte de Python et je vous ai mis quelques images 
+de l’ensemble de Mandelbrot en vous donnant l’algorithme qui produit ces zolies images #love# Mais aujourd’hui 
+on va essayer de faire un peu mieux.</p>
+
+<p>Bon je pense que personne n’est allé sur wiki pour voir ce que c’était que cet ensemble, donc je vais le faire 
+vite fait. Vous voyez, comme tout les bons blockbusters, on va parler d’une suite, et même d’une suite complexe !</p>
+
+<script type="math/tex; mode=display">
+\begin{cases}
+Z_0 = 0\\
+Z_{n+1} = Z_n^2 + c
+\end{cases}
+</script>
+
+<p>Bon voilà elle fait pas trop peur (en plus elle est en $\LaTeX$ #tritop#) . A moins que vous ayez la phobie des suites 
+depuis que vous avez subi Matrix II et III. L’idée de cette suite c’est qu’on va faire varier $c$ en prenant toutes 
+les valeurs du plan complexe. Quand la suite ne diverge pas on va dire que c’est dans l’ensemble de Mandelbrot 
+(le blanc sur les images). Et quand elle diverge on va lui donner une couleur relative à la vitesse à laquelle elle a
+ divergé. Bref, pas de quoi casser 3 nuggets à un canard.</p>
+
+<p>Mais malheureusement on a pas de jolie formule pour savoir si la suite diverge ou pas, il faut la calculer et voir 
+au bout d’un moment si on est parti en live (le module explose =&gt; la suite diverge). Des mathématiciens trop stylés 
+(je dis ça parce que j’ai oublié leurs noms dès que je les ai lus) ont montré que si le $| z| &gt; 2$ 
+à un moment, alors ça va diverger. Facile.</p>
+
+<p>Mais dans la cas où ça diverge pas, on est obligé de calculer toutes les itérations de la suite jusqu’à ce qu’on en ai 
+marre. Et la patience d’un informaticien est très limitée (si on passe sa vie à attendre l’ordinateur, alors ça bouffe du
+ temps libre qu’on préférerait passer dans son pieu, parole de stagiaire =) ).</p>
+
+<p>Par exemple dans mes images j’ai mis une limite de 300 itérations avant qu’on dise que ça ne diverge pas. Mais ça prend
+ un temps fou de calculer jusqu’à $Z_{299}$ à chaque fois, genre 30 secondes par image #eeek#</p>
+
+<p>Donc, comme le rendu est déjà assez long et que j’aimerais bien améliorer un peu l’aspect de nos fractales, on va voir 
+comment optimiser tout ça ! Il existe 2 types d’optimisation lorsqu’on fait du code :</p>
+
+<ul>
+  <li>
+    <p><strong>L’optimisation technique :</strong> ça va consister à essayer de faire exécuter son code le plus vite possible en évitant les pièges
+ des langages (genre les boucles en Matlab ou instancier 15 000 objets en java). Ça va aussi consister à changer de langage 
+ de programmation si on a atteint les limites de celui qu’on utilise (genre passer au C/C++) ou alors faire du multi-threading.
+ On finit bien sûr par la solution la plus prisée des gens qui ont de l’argent mais pas de temps (les boîtes quoi…) : acheter 
+ une machine plus puissante. Bref ce genre d’optimisation c’est quand on a plus d’idées, ça permet de faire gagner en performance 
+ mais c’est mieux de commencer par le second type d’optimisation ! </p>
+  </li>
+  <li>
+    <p><strong>L’optimisation fonctionnelle :</strong> là il va s’agir de réfléchir au problème qu’on essaye de résoudre, à comment comment trouver le résultat 
+en moins de temps. Donc typiquement ça va être de faire baisser la complexité asymptotique du code (ne pas dépasser le $O(n^{2})$ et encore le 
+$O(n)$ c’est quand même bien plus sympa !), trouver des astuces, chasser la bonne idée qui va tout casser. </p>
+  </li>
+</ul>
+
+<p>Vous l’aurez compris je ne suis pas très intéressé par une optimisation technique de ce code dans un premier temps (sinon j’aurai fait ça en C direct). Pour autant voici les 
+pistes naturelles qu’il faudrait suivre :</p>
+
+<ul>
+  <li><strong>Tout refaire en C/C++</strong>, mais ici le sujet c’est le python donc bof bof… </li>
+  <li><strong>Utiliser Cython :</strong> un package qui fait sauter le typage faible mais qui accélère pas mal les choses, ça demande de revoir un peu le code 
+mais ça se fait… </li>
+  <li><strong>Utiliser Numba :</strong> ça va compiler le code python à l’exécution, c’est cool mais ça demande LLVM et j’ai pas encore trouvé comment l’installer
+ facilement sur Windows :(</li>
+  <li><strong>Me mettre au multi-threading en Python :</strong> ouais on verra ça plus tard %)</li>
+</ul>
+
+<h3 id="bon-alors-comment-on-fait-pour-optimiser-mandelbrot-">Bon alors, comment on fait pour optimiser Mandelbrot ?</h3>
+
+<p>Et bien, des mathématiciens ont montré (oui Mandelbrot c’est un truc de mecs qui s’ennuient, alors forcément y’a des résultats !) que l’ensemble 
+de Mandelbrot est connexe #top#. En français ça veut dire que c’est un espace d’un seul tenant, sans trous. En gros c’est une patate.</p>
+
+<p>Et donc une des implications c’est que si je dessine un contour qui appartient à l’ensemble, alors tout ce qu’il y a dans le contour appartient 
+à l’ensemble ! Donc en gros je vais couper mon image en pleins de petits rectangles (disons 4 pour commencer) et voir si le contour de ces rectangles
+ est dans l’ensemble (si ça diverge quoi !). Si oui je les rempli en blanc, sinon je coupe mon rectangle en pleins de petits rectangles et je m’intéresse
+ à ces minis rectangles que je peint en blanc ou que je recoupe en …., etc.</p>
+
+<p>Forcément il y a un moment où on arrête de couper les rectangles en petits rectangles et où on fait comme avant (on regarde pour tout les points si ça
+ diverge ou pas). Mais normalement ça devrait faire gagner pas mal de perfs !</p>
+
+<p>Alors voici 2 images pour montrer comment ça marche maintenant. Sur la première j’arrête assez vite d’essayer de faire des petits carrés alors que sur la seconde je
+continue assez longtemps à en faire. Toute la partie en rouge est donc constitué de rectangles que j’ai colorié en rouge parce que leur contour appartient à l’ensemble de Mandelbrot,
+donc leur contenu aussi.</p>
+
+<p>Dans un prochain (et sans doute dernier) billet sur le sujet j’essayerai un coup de voir comment on pourrait faire pour faire ça en multi-threading et voir les apports niveau performance
+ des différentes approches.</p>
+
+<p class="center"><img src="/img/mandel-opt1.png" alt="Hum, quel joli choix de couleurs !" /></p>
+
+<p class="center"><img src="/img/mandel-opt2.png" alt="Ceci n'est pas un hot dog." /></p>
+
+<p>Le code : par rapport à la dernière fois, mandelbrot.py s’est fait passé dessus, et y’a eu une ou deux modifs sur launcher.py.</p>
+
+<pre><code>import numpy as np
+import sys
+import Rectangle as Rect
+
+def frange(start, stop, step=1.0):
+    while start &lt; stop:
+        yield start
+        start = start + step
+        
+class mandelbrot:
+
+    def __init__(self, w, h, rect, max_iteration, max_small_rect_width):
+        self.grid = -2 * np.ones((w, h))
+        self.max_iteration = max_iteration
+        self.w = w
+        self.h = h
+        self.rect = rect
+        self.wIncrement = float((self.rect.right - self.rect.left)/self.w)
+        self.hIncrement = float((self.rect.top - self.rect.bottom)/self.h)
+        self.max_small_rect_width = max_small_rect_width
+
+    # Fonction récursive qui coupe en 4 le rectangle qu'on lui donne et regarde si le contour des petits rectangles
+    # appartient à l'ensemble; Si c'est le cas on "colorie" l'intérieur du rectangle sinon on appelle la fonction sur chacun des
+    # petits rectangles ...
+    # Quand on a des rectangles trop petits, on se contente de les calculer (sans les diviser)
+    def recCompute(self, w, h, rect):
+
+        if(w &gt; self.max_small_rect_width):
+
+            # Decoupe en 4 du rectangle
+            rects = []
+            rects.append(Rect.rectangle(abs(rect.top - rect.bottom) / 2. + rect.bottom, rect.top, rect.left, abs(rect.right - rect.left) / 2. + rect.left))
+            rects.append(Rect.rectangle(abs(rect.top - rect.bottom) / 2. + rect.bottom, rect.top, abs(rect.right - rect.left) / 2. + rect.left, rect.right))
+            rects.append(Rect.rectangle(rect.bottom, abs(rect.top - rect.bottom) / 2. + rect.bottom, rect.left, abs(rect.right - rect.left) / 2. + rect.left))
+            rects.append(Rect.rectangle(rect.bottom, abs(rect.top - rect.bottom) / 2. + rect.bottom, abs(rect.right - rect.left) / 2. + rect.left, rect.right))
+
+            for recti in rects:
+                
+                if(self.isInsideMandelbrot(recti)):
+                    
+                    w0 = (self.rect.left - recti.left) * self.w / (self.rect.left - self.rect.right)
+                    w1 = (self.rect.left - recti.right) * self.w / (self.rect.left - self.rect.right)
+                    h0 = self.h - (self.rect.top - recti.bottom) * self.h / (self.rect.top - self.rect.bottom) - 1
+                    h1 = self.h - (self.rect.top - recti.top) * self.h / (self.rect.top - self.rect.bottom) - 1
+
+                    self.grid[w0:w1, h0:h1] = -3
+                    
+                else:
+                    self.recCompute(w/2., h/2., recti)
+
+        else:
+            offw = abs((self.rect.left - rect.left) * self.w / (self.rect.left - self.rect.right))
+            offh = self.h - abs((self.rect.top - rect.top) * self.h / (self.rect.top - self.rect.bottom))
+            self.computeRectangle(rect, w, h, offw, offh)
+            return
+
+    # Calcule la matrice des divergences des intervalles définis
+    def compute(self):
+
+        self.recCompute(self.w, self.h, self.rect)
+
+        return self.grid
+
+    # Regarde si le contour d'un rectangle est dans l'ensemble de Mandelbrot
+    def isInsideMandelbrot(self, rect):
+
+        for i in frange(rect.left, rect.right, self.wIncrement):
+            if(self.computeOnePoint(i, rect.top) != -1):
+                return False
+
+        for i in frange(rect.left, rect.right, self.wIncrement):
+            if(self.computeOnePoint(i, rect.bottom) != -1):
+                return False
+
+        for j in frange(rect.bottom, rect.top, self.hIncrement):
+            if(self.computeOnePoint(rect.left, j) != -1):
+                return False
+
+        for j in frange(rect.bottom, rect.top, self.hIncrement):
+            if(self.computeOnePoint(rect.right, j) != -1):
+                return False
+
+        return True
+
+    # Calcule la valeur d'un point (retorune le nombre d'irération avant que la suite ne diverge
+    # ou -1 si la suite ne diverge pas
+    def computeOnePoint(self, i, j):
+
+        c = complex(i, j)
+        z = complex(0,0)
+        t = 0
+                
+        while (abs(z) &lt; 2 and t &lt; self.max_iteration):
+            z = z * z + c
+            t = t + 1
+
+        if(abs(z) &gt;= 2):
+            return t
+        else:
+            return -1
+
+    # Calcule tout les points d'un rectangle avec les valeurs étant dans l'intervalle du rectangle rect et
+    # avec une résolution permettant d'aller dans une matrice de taille (w, h)
+    # Les offw et offh sont deux offsets pour mettre les résultats au bon endroit dans la matrice
+    def computeRectangle(self, rect, w, h, offw, offh):
+
+        mW = offw
+        
+        for i in frange(rect.left, rect.right, self.wIncrement):
+
+            mH = offh - 1
+            
+            for j in frange(rect.bottom, rect.top , self.hIncrement):
+
+                if mW &gt;= self.w:
+                    print 'Out of bound : w = ' + repr(mW) + ' i = ' + repr(i) + ' j = ' + repr(j)
+                    continue
+
+                if mH &gt;= self.h:
+                    print 'Out of bound : h = ' + repr(mH) + ' i = ' + repr(i) + ' j = ' + repr(j)
+                    continue
+
+                if self.grid[int(mW), int(2 * offh - h - mH - 2)] == -2:
+                    self.grid[int(mW), int(2 * offh - h - mH - 2)] = self.computeOnePoint(i, j)
+                        
+                mH = mH - 1
+                
+            mW = mW + 1
+    
+        return self.grid;                           
+</code></pre>
+
+<pre><code>import sys
+import pygame
+
+import Mandelbrot
+import Rectangle as Rect
+      
+def draw(N):
+   w = N.shape[0]
+   h = N.shape[1]
+   
+   pygame.init() 
+
+   #create the screen
+   window = pygame.display.set_mode((w, h)) 
+
+   # Fill background
+   background = pygame.Surface(window.get_size())
+   background = background.convert()
+   background.fill((250, 250, 250))
+
+   for i in range(w):
+      for j in range(h):
+         if N[i, j] != -1:
+            t = N[i, j]
+            if(t != -3):
+               background.set_at((i, h - j), ((t*32)%255, (t*16)%255, (t*4)%255))
+            else:
+               background.set_at((i, h - j), (255, 0, 0))
+
+   #save the image to file
+   pygame.image.save(background, 'mandel.png')
+
+   #draw it to the screen
+   window.blit(background, (0, 0))
+   
+   pygame.display.flip()
+
+   #input handling (somewhat boilerplate code):
+   while True: 
+      for event in pygame.event.get(): 
+         if event.type == pygame.QUIT: 
+             sys.exit(0) 
+         else: 
+             print event 
+      
+## C'est là où on paramètre les intervalles qu'on veut afficher
+ymin = -1.
+ymax = 1.
+xmin = -2
+xmax = 0.5
+
+largeur = 1000
+iteration = 500
+
+ratio = float(ymax - ymin) / float(xmax - xmin)
+rect = Rect.rectangle(ymin, ymax, xmin, xmax)
+
+w = int(largeur)
+h = int(ratio * largeur)
+
+M = Mandelbrot.mandelbrot(w, h, rect, iteration, 20)
+N = M.compute()
+
+draw(N)
+</code></pre>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2013/06/27/python-et-mandelbrot/" data-toggle="tooltip" data-placement="top" title="Python et Mandelbrot">&larr; Billet précédent</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2013/07/09/pokemon-ou-lenfance-trahie/" data-toggle="tooltip" data-placement="top" title="Pokémon ou l'enfance trahie">Billet suivant &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/PoulpiP">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/synchrocomptes">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/PoulpiFr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; poulpiBlog 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

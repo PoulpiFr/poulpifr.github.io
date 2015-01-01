@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Un blog qui parle de châtons, de code, enfin de la vie quoi !">
+
+    <title>Comment hacker un jeu Palm Os ? - poulpiBlog</title>
+
+    <link rel="canonical" href="http://poulpi.fr/2014/03/09/comment-hacker-un-jeu-plam-os-bike-or-die-edition/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- mathjax config similar to math.stackexchange -->
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+    <script type="text/javascript"
+       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poulpiBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">A propos</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/hack.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Comment hacker un jeu Palm Os ?</h1>
+                    
+                    <span class="meta">Posté par poulpi le 09/03/14</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h2 id="contexte">Contexte</h2>
+<p>Le soleil est revenu et il n’y a rien de tel qu’un bain de soleil pour faire le plein d’idées =) Ainsi j’ai trouvé mon prochain projet qui devrait m’occuper quelques soirées ^^</p>
+
+<p>En fait je suis récemment retombé sur une pépite de mon adolescence : le jeu <strong>Bike or Die</strong> que j’avais sur ma <a href="http://en.wikipedia.org/wiki/Tapwave_Zodiac"><strong>Tapwave Zodiac</strong></a>, et il déchirait ! Ce qui faisait la force du jeu, en plus de son gameplay à la fois fun et frustrant, c’était son éditeur de niveaux qui a permis à de nombreux joueurs de créer eux mêmes leurs packs de cartes.</p>
+
+<p>Comme il n’y a pas vraiment à mon sens de jeu sur Android et iOs qui reprend ce concept, je me suis donné le projet d’en faire un. Certes il y a eu un port de Bike or Die par le créateur mais il est vieux, cher et moche, un peu comme les meubles Louis XIV qu’on trouve dans les brocantes …</p>
+
+<p>L’idée de base serait d’assurer une compatibilité avec les 1700+ niveaux de <strong>Bike or Die</strong>.  Donc pour cela il va déjà me falloir comprendre comment sont stockés les niveaux étant donné que le format de données n’est pas libre ou documenté =) Et ça commence par arriver à lancer le jeu sur mon ordinateur ! </p>
+
+<p><em>&lt;mylife&gt;</em>
+Pour cela il faut trouver un émulateur de Palm OS sur PC et y installer le jeu. Personnellement je n’ai réussi qu’à faire fonctionner la version 1.6b sur Palm OS 3.5. En effet je n’ai jamais réussi à installer la version 2 de Bike or Die sur un émulateur de Palm OS 5 ou 6 (il faut au moins la version 5 pour faire tourner la deuxième version du jeu). 
+<em>&lt;/mylife&gt;</em></p>
+
+<p>Mais une fois le jeu installé, il faut le faire passer en version complète en achetant un code spécifique à taper directement dans le jeu. Le seul hic c’est que le site permettant d’acheter les codes ne fonctionne plus. Et donc il va falloir le hacker #devil#</p>
+
+<h2 id="comment-hacker-un-jeu-palm-os-">Comment hacker un jeu Palm OS ?</h2>
+
+<p>Bon vous l’aurez compris, le plus facile est de modifier le jeu pour qu’il accepte n’importe quel code comme étant bon. Et c’est exactement ce qu’on va faire. Cette manipulation peur s’appliquer pour pleins d’autres programmes que juste un jeu Palm OS :) </p>
+
+<p>Donc on va désassembler le fichier du jeu pour obtenir le code assembleur et essayer de comprendre où a lieu la vérification du code rentré. Pour cela on pourra utiliser le désassembleur <a href="http://www.freewarepalm.com/utilities/pilotdis.shtml">PilotDis</a>. </p>
+
+<p>Le résultat ressemble à ça :</p>
+
+<pre><code>[...]
+00042c76   2f03				L1396	MOVE.L	D3,-(A7)
+00042c78   4e4fa170				TRAP	#15,$A170 = sysTrapFrmDeleteForm
+00042c7c   588f					ADDQ.L	#4,A7
+00042c7e   0c44000c				CMPI.W	#12!$c,D4
+00042c82   660c					BNE	L1397
+00042c84   206decd0				MOVEA.L	-4912(A5),A0
+00042c88   d1fc000070dc				ADDA.L	#28892!$70dc,A0
+00042c8e   4e90					JSR	(A0)
+00042c90   4cee0038ffc4			L1397	MOVEM.L	-60(A6),D3-D5
+00042c96   4e5e					UNLK	A6
+00042c98   4e75					RTS
+00042c9a   4e560000			L1398	LINK	A6,#0
+00042c9e   206e0008				MOVEA.L	8(A6),A0
+00042ca2   0c500009				CMPI.W	#9,(A0)
+00042ca6   6634					BNE	L1402
+00042ca8   30280008				MOVE.W	8(A0),D0
+00042cac   0c400014				CMPI.W	#20!$14,D0
+00042cb0   670a					BEQ	L1399
+00042cb2   0c400015				CMPI.W	#21!$15,D0
+00042cb6   6712					BEQ	L1400
+00042cb8   60000022				BRA	L1402
+00042cbc   206deccc			L1399	MOVEA.L	-4916(A5),A0
+00042cc0   d1fc00004084				ADDA.L	#16516!$4084,A0
+00042cc6   6000000c				BRA	L1401
+00042cca   206deccc			L1400	MOVEA.L	-4916(A5),A0
+00042cce   d1fc000037f8				ADDA.L	#14328!$37f8,A0
+00042cd4   4e90				L1401	JSR	(A0)
+00042cd6   7001					MOVEQ	#1,D0
+00042cd8   60000004				BRA	L1403
+00042cdc   4240				L1402	CLR.W	D0
+00042cde   4e5e				L1403	UNLK	A6
+00042ce0   4e75					RTS
+00042ce2   4e56ffac			L1404	LINK	A6,#-84
+00042ce6   48e71c38				MOVEM.L	D3-D5/A2-A4,-(A7)
+00042cea   47edf1b0				LEA	-3664(A5),A3
+00042cee   3a2b0132				MOVE.W	306(A3),D5
+00042cf2   1d7c0005ffac				MOVE.B	#5,-84(A6)
+00042cf8   422effad				CLR.B	-83(A6)
+00042cfc   3d7c001effae				MOVE.W	#30!$1e,-82(A6)
+00042d02   41eb0078				LEA	120(A3),A0
+[...]
+</code></pre>
+
+<p>Bon sauf qu’il y a pas mal de lignes quand même (105 461 en tout :o), donc on va essayer de cibler la partie qui nous intéresse. Pour cela, jetons un coup d’œil à ce qui se passe quand on rentre un code faux :</p>
+
+<p class="center"><img src="/img/unlock_bik.jpg" alt="Oui, la HD c'était pas encore trop ça ..." /></p>
+
+<p>Bon vous l’aurez vu, le bouton passe de “Unlock” à Wrong code”, et ça c’est un début ! Donc on recherche “Wrong code” dans le code assembleur et on trouve cette ligne :</p>
+
+<pre><code>0004312a   57726f6e6720636f6465		L1422	DC.B	'Wrong code'
+</code></pre>
+
+<p>Alors en langage “humain”, cette ligne revient à stocker le texte “Wrong code” dans une variable <strong>L1422</strong> (bon en vrai c’est un peu plus subtil mais on va pas la jouer trop fine). Donc on regarde quand est ce que <strong>L1422</strong> revient dans le code et on trouve :</p>
+
+<pre><code>00043318   41fafe10			L1431	 LEA	L1422,A0
+</code></pre>
+
+<p>Donc cette fois ci en gros on charge la variable en mémoire si <strong>L1431</strong> est appelé. Donc on recherche cette fois ci <strong>L1431</strong> dans le code ! Et on trouve :</p>
+
+<pre><code>00043300   320b				L1430	MOVE.W	A3,D1
+00043302   4a01					TST.B	D1
+00043304   6712					BEQ	L1431
+00043306   397c0001007c				MOVE.W	#1,124(A4)
+0004330c   2f07					MOVE.L	D7,-(A7)
+0004330e   4e4fa170				TRAP	#15,$A170 = sysTrapFrmDeleteForm
+00043312   588f					ADDQ.L	#4,A7
+00043314   6000fe64				BRA	L1426
+</code></pre>
+
+<p>Donc là on voit qu’il y a un test (<strong>TST.B</strong>) puis que si il y avait égalité dans le test, on part en <strong>L1431</strong> (<strong>BEQ L1431</strong>). Et je crois qu’on a compris que <strong>L1431</strong> c’était vraiment pas là où on voulait aller ^^ Donc on va transformer le <strong>BEQ L1431</strong> en <strong>BNE L1431</strong> (<strong>BNE</strong> c’est l’inverse de <strong>BEQ</strong>). </p>
+
+<p>Bon, mais comment on fait ? Vous aurez remarqué que à chaque fois que j’ai mis du code, il y avait 3 colonnes et que je ne me suis intéréssé qu’à la troisième, et bien c’est maintenant que ça va changer ! La première colonne donne en fait à chaque fois la position dans le fichier source du code et la seconde colonne l’hexadécimal brut. Et la troisième colonne c’est l’hexadécimal traduit en assembleur.</p>
+
+<p>Donc on va devoir traduire notre code assembleur en hexadécimal et aller le mettre à la bonne adresse dans le fichier en utilisant un éditeur hexadécimal =)</p>
+
+<h2 id="assembler--la-main-une-instruction-comment-fait-on-">Assembler à la main une instruction, comment fait-on ?</h2>
+
+<p>Pour commencer, je propose d’assembler l’instruction <strong>BEQ L1431</strong> car on connaît déjà sa forme hexadécimal car elle est dans la deuxième colonne de sa ligne (<strong>6712</strong>). </p>
+
+<p>C’est ici qu’on va utiliser le <a href="http://goldencrystal.free.fr/M68kOpcodes.pdf">super tableau de GoldenCrystal</a> dans lequel on va s’intéresser à la ligne <strong>Bcc</strong> (oui en fait <strong>BEQ</strong>, <strong>BNE</strong> et consorts c’est la même famille qui s’appelle <strong>Bcc</strong> ^^). Donc on y voit que l’instruction tient sur 4 mots de 4 bits chacuns :</p>
+
+<ul>
+  <li>Le premier est 0b0110 et identifie le fait que c’est une instruction de la famille <strong>Bcc</strong></li>
+  <li>Le second est 0b0111 et c’est celui qui donne le type de la condition (ici c’est <strong>EQ</strong> comme on assemble <strong>BEQ</strong>). La liste des mots de 4 bits représentant les différentes conditions est dans un petit tableau à droite sur le pdf de GoldenCrystal</li>
+  <li>Les deux derniers ça va être l’offset de la distance à parcourir pour arriver à la ligne du code à laquelle on aimerait aller si la condition est vérifiée. Donc c’est l’adresse d’arrivée (<strong>L1431</strong>) moins l’adresse juste après notre <strong>BEQ</strong>, càd 0x00043318 - 0x00043306 = 0x12 = 0b0001 0010</li>
+</ul>
+
+<p>Donc au final notre instruction vaut :
+0b0110 0111 0001 0010 = 0x6712</p>
+
+<p>On est bien retombé sur notre code hexa pour notre <strong>BEQ</strong> ! Du coup on trouve assez facilement comment faire un <strong>BNE</strong> (il suffit de changer le byte de condition en prenant 0b0110 au lieu de 0b0111 pour passer de <strong>EQ</strong> à <strong>NE</strong>, <a href="http://goldencrystal.free.fr/M68kOpcodes.pdf">cf le pdf</a>). Du coup notre nouvelle instruction vaut :
+0b0110 0110 0001 0010 = 0x6612</p>
+
+<p>Donc vous l’aurez compris, pour hacker le jeu, on va aller changer le 0x6712 à la ligne 00043304 (cf la première colonne du code mis plus haut) pour le remplacer par 0x6612. Pour cela on ouvre n’importe quel éditeur hexadécimal et on charge le fichier du jeu. End of story. </p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Tout ça pour ça vous allez me dire. Mais en changeant un 7 en 6 au bon endroit, on hacke le système de protection d’un jeu. Moi je trouve ça pas mal ! </p>
+
+<p>Sur ce je vais continuer à essayer de comprendre le format des cartes de niveaux du jeu pour coder ma propre version, je me laisse 2-3 mois pour avoir une bêta =) </p>
+
+<p>PS : Il n’y a pas 10 ans ma petite manip de ce post me semblait magique et hors de portée des gens “normaux”, c’est marrant comme les temps changent ^^</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2014/02/27/apero/" data-toggle="tooltip" data-placement="top" title="Apéro?, l'appli android d'un soir">&larr; Billet précédent</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2014/05/04/un-craquement-d-allumette/" data-toggle="tooltip" data-placement="top" title="Un craquement d'allumette">Billet suivant &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/PoulpiP">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/synchrocomptes">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/PoulpiFr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; poulpiBlog 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

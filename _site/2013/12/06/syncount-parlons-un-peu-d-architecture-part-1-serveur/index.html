@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Un blog qui parle de châtons, de code, enfin de la vie quoi !">
+
+    <title>SynCount, parlons un peu d'architecture - Serveur - poulpiBlog</title>
+
+    <link rel="canonical" href="http://poulpi.fr/2013/12/06/syncount-parlons-un-peu-d-architecture-part-1-serveur/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- mathjax config similar to math.stackexchange -->
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+    <script type="text/javascript"
+       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poulpiBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">A propos</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/architecture.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>SynCount, parlons un peu d'architecture - Serveur</h1>
+                    
+                    <span class="meta">Posté par poulpi le 06/12/13</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>Dans mes deux billets précédents j’ai abordé le placement fonctionnel de SynCount et j’ai parlé de son design que je voulais 
+être un des points différenciant par rapport à des applications existantes bien implantées.</p>
+
+<p>Mais un autre point essentiel dans mon positionnement c’est la synchronisation temps réel de SynCount et son fonctionnement 
+aussi bien en mode Hors Ligne que connecté.</p>
+
+<p>Pour tout ça il a fallu aborder pas mal de points et je vais en parler dans cet article.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>La synchronisation c’est plutôt tendu, alors j’ai cherché des grosses briques déjà faites. Et si on gagne énormément en qualité et en 
+temps de dév en prenant des bouts déjà fait, il faut quand même prendre du temps pour :</p>
+
+<ul>
+  <li>Identifier les bons bouts de code qui vont être assez modulables pour faire ce qu’on veut tout en restant assez simple et performant</li>
+  <li>S’arracher les cheveux à faire fonctionner toutes ces librairies ensemble sans perdre toutes ses dents en mordant son clavier</li>
+</ul>
+
+<p>Donc ce qui est exposé ici est une architecture qui marche mais il n’est pas dit que ce soit la meilleure ^^</p>
+
+<h2 id="de-quoi-avons-nous-besoin-pour-synchroniser-des-comptes-partags-">De quoi avons nous besoin pour synchroniser des comptes partagés ?</h2>
+
+<p>Et bien il faut des clients (les téléphones des clients) et un/des serveur(s) pour enregistrer tout ce qui se passe sur les smartphones.</p>
+
+<h3 id="un-serveur--quelles-caractristiques-">Un serveur ? Quelles caractéristiques ?</h3>
+
+<p>Alors on peut choisir tout un tas de critères quand on choisi le bon serveur mais ce qui m’a parût important c’est d’avoir quelque chose
+ qui respecte ces caractéristiques :</p>
+
+<ul>
+  <li>Pas cher : Je suis pas riche et la monétisation de mon service n’est pas du tout assuré. Comme la location d’un serveur est un coût 
+fixe, mieux vaut en prendre un pas cher.</li>
+  <li>Evolutif : sait-on jamais si mon application marche et a besoin d’un boost serveur (la meilleure chose qui pourrait m’arriver parce 
+que je serais super riche \o/), il faut que je sois capable de monter facilement en puissance.</li>
+  <li>Permettant de faire tourner n’importe quoi dessus (donc pas du Google App Engine :( )</li>
+  <li>Disponible quasiment tout le temps : ça serais con qu’il se coupe de temps en temps …</li>
+</ul>
+
+<p><strong>Mon choix :</strong> Une instance Amazon EC2. C’est une machine virtuelle qui tourne dans un des datacenters d’Amazon, qui n’est pas trop 
+chère. La plus petite (que j’ai pour l’instant) coûte 8€ par mois et est offerte la première année.</p>
+
+<p>Et surtout c’est très facilement upgradeable ! Donc si j’ai besoin de plus, je monte en puissance en 3 clics !</p>
+
+<h3 id="bon-et-sur-le-serveur-il-faut-mettre-quoi-">Bon et sur le serveur il faut mettre quoi ?</h3>
+
+<p>Alors il va falloir coder une petite application qui va recevoir des enregistrements assez divers (Amis, Transactions, Comptes, etc.) 
+et qui va être capable de les mettre à disposition !</p>
+
+<p>Bon là je dois avouer que j’ai un peu craqué sur la techno : j’ai choisi <a href="http://nodejs.org/">Node.js</a></p>
+
+<p>Pourquoi ? Parce que c’est cool. Et c’est très orienté I/O temps réel. Et parait que c’est léger (quand c’est lourd faut 
+un plus gros serveur, et ça coûte plus cher :( ). Par contre c’est en JavaScript et je suis pas vraiment un expert :p</p>
+
+<p>Bon et à ça il va falloir coller une petite base de données pour enregistrer toutes ces dépenses. Et bien j’ai choisi 
+<a href="http://www.mongodb.org/">MongoDB</a> qui est une base <a href="http://fr.wikipedia.org/wiki/NoSQL">NoSQL</a>.</p>
+
+<p>En gros une base de données SQL c’est pleins de tableaux : genre une dépense va avoir une colonne “montant”, une colonne “titre”,
+ etc. Et une base de donnée NoSQL ça va avoir que 2 colonne : une où on a le numéro de l’entrée du tableau, et l’autre où on a le contenu. Par contre du coup le contenu il faut le mettre en forme comme ça :</p>
+
+<pre><code>{
+  "__v": 0,
+  "_id": "5297ac700b6adcc37800000c",
+  "passkey": "84ujac",
+  "status": "Pending",
+  "title": "WE Amiens ",
+  "id": "34555b11-031c-4e47-bf6c-6ca3875f25c0",
+  "currency": "€",
+  "modified": "2013-11-28T21:51:44.877Z",
+  "created": "2013-11-28T20:49:52.104Z",
+  "friends": [
+    "5297ac700b6adcc378000007",
+    "5297ac700b6adcc378000008",
+    "5297ac700b6adcc378000009",
+    "5297ac700b6adcc37800000a",
+    "5297ac700b6adcc37800000b"
+  ]
+}
+</code></pre>
+
+<p>Ah oui, c’est pas super jojo à manipuler ça :p</p>
+
+<p>Mais il y a une superbe librairie pour NodeJS qui permet de faire tout ça : <a href="http://mongoosejs.com/index.html">Mongoose</a>. 
+Ça permet de gérer ces écritures savantes en objets JavaScript et du coup tout devient plus facile. On peut faire des recherches 
+dans la base de données et demander à “peupler” les données : par exemple là on voit que les “friends” c’est pas vraiment ça … 
+En fait les numéros ce sont les identifiants de structures “friend” qui sont dans la base de donnée. On peut demander au serveur 
+d’aller chercher ces “friend” et de les afficher directement dans la structure “event” en une ligne, c’est #top#.</p>
+
+<p>Pour info mon serveur fait au final moins de 500 lignes !</p>
+
+<h3 id="mais-comment-on-va-faire-pour-faire-communiquer-ton-appli-avec-ce-serveur--ils-vont-parler-quoi-comme-langue-entre-eux-pour-se-comprendre-">Mais comment on va faire pour faire communiquer ton appli avec ce serveur ? Ils vont parler quoi comme langue entre eux pour se comprendre ?</h3>
+
+<p>Bon alors là, il va falloir utiliser un truc que j’ai découvert l’année dernière : les webservices. L’idée c’est qu’on appelle une URL 
+(en envoyant des données ou pas) et le serveur répond en envoyant des données dans un format prédéfini (XML ou JSON le plus souvent) ou 
+le serveur fait juste une action (genre supprimer un ami) et dit s’il a réussi ou pas.</p>
+
+<p>Pour NodeJS, le plus facile c’est encore d’utiliser le super module <a href="http://expressjs.com/">Express</a> qui simplifie la vie en 
+permettant très facilement de comprendre quelle URL a été appelée et avec quelles données avec.</p>
+
+<p>Pour renvoyer les données, il faut savoir que MongoDB renvoie directement du JSON donc c’est nickel, on fera comme ça !</p>
+
+<p>Pour le formalisme des codes d’erreurs, d’envoi de données, etc on va utiliser les bases du protocole 
+<a href="http://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> avec des requêtes en GET, en POST et en DELETE.</p>
+
+<p>Pour en savoir plus sur le sujet, il y a ce <a href="http://coenraets.org/blog/2012/10/creating-a-rest-api-using-node-js-express-and-mongodb/">type</a> 
+qui donne pas mal de code super sympa !</p>
+
+<p>Donc on a :</p>
+
+<ul>
+  <li>Une instance EC2 chez Amazon</li>
+  <li>Un serveur NodeJS dessus (moins de 500 lignes) qui utilise Mongoose et Express.</li>
+  <li>Une base de données MongoDB.
+==&gt; Un petit serveur répondant du JSON aux webservices qui vont bien !</li>
+</ul>
+
+<p>Niveau de geekerie = ~75% (parce que c’est des technos en plein boom quand même :p).</p>
+
+<p>La prochaine fois on va voir comment on code une application android pour faire tourner tout ça !</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2013/11/29/syncount-une-question-de-design/" data-toggle="tooltip" data-placement="top" title="SynCount, une question de design">&larr; Billet précédent</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2013/12/26/common-fact-debunking-2-les-carottes-font-elles-des-maths-le-soir/" data-toggle="tooltip" data-placement="top" title="Common Fact Debunking #2 : Les carottes font-elles des maths le soir ?">Billet suivant &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/PoulpiP">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/synchrocomptes">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/PoulpiFr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; poulpiBlog 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

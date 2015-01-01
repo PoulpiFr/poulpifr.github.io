@@ -1,0 +1,106 @@
+---
+layout: post
+title: "SynCount, c'est l'histoire d'une appli Android"
+date: 2013-11-29 00:33
+header-img: "img/engineering.jpg"
+author: "poulpi"
+---
+
+L'année dernière j'ai eu la chance de pouvoir prendre un peu de mon temps de travail pour me pencher sur la programmation 
+Android et j'ai approfondi ma connaissance du Java. Et j'ai trouvé ça sympa, mais j'avais l'impression d'avoir raté une bonne
+ partie de l'aventure Android.
+
+Quand tu fais une appli tu dois réfléchir à comment faire pour rentrer dans la poche de milliers de gens en leur proposant une
+ super appli dont le concept a sans doute déjà été exploré 100 fois ... C'est pas facile :p La plupart du temps tu trouves une 
+ idée et tu te rends compte que quelqu'un était dessus bien avant toi et qu'il y a déjà moult solutions pour faire exactement ce
+ que tu avais en tête. C'est rageant.
+
+Bon alors au bout d'un moment j'en ai eu marre et j'ai décidé de faire mes armes en reprenant un concept déjà existant mais en 
+essayant de lui donner une direction unique et de soigner la réalisation. Je ne pense pas casser trois pattes à un canard avec 
+mais au moins j'aurais vu un peu de technique et je me serais éclaté.
+
+### Bon ok, c'est quoi ton idée ?
+
+Alors durant l'été j'ai eu l'idée de faire une appli qui permette de gérer les dépenses dans un événement en groupe : on part tous
+ en vacances entre potes et c'est chiant de devoir garder tout les tickets pour qu'un bon samaritain s'occupe de tout mettre à plat
+ et te sorte un plan de remboursement sorti de nulle part. Une fois j'ai même failli y perdre des plumes (*Dans le port d'Amsterdam,
+ Y'a des comptables qui pleurent*).
+
+### Ah oui, mais y'a un pote qui m'a montré Tricount, c'est trop stylé et ça fait exactement ça !
+
+Certes. J'ai téléchargé Tricount, j'ai même vu des gens l'utiliser. Et j'ai pleuré.
+
+Vois tu, la programmation Android c'est pas mal parce que c'est vachement permissif d'un point de vue visuel et que y'a pas mal de 
+geeks sans goût qui s'y jettent. Mais ça fait aussi des applis comme Tricount à la fin...
+
+Je ne suis pas un graphiste dans l'âme et je suis assez mauvais dans tout ce qui est conception graphique, mais quand je vois ce genre 
+d'appli, je suis obligé de dire "Android, c'est vraiment moche...". Alors bon, disons que tu ne soit pas comme moi rebuté par cette 
+interface grisâtre, utilisons là !
+
+Et là y'a des vraies notions d'ergonomie qui ont dues échapper aux développeur ... Parce que pour sauvegarder un changement, ne cherche
+ pas le bouton, il n'existe pas. Après 10 secondes de recherche tu en as marre et tu décides de quitter l'écran avec le bouton "retour" 
+ d'Android (celui qui sert **toujours** à **quitter**). Et là, magie, quand tu veux sortir on te propose de sauvegarder ... **WTF?**
+
+Je suis mauvaise langue, tu peux aussi sauvegarder en appuyant sur le bouton "menu". C'est super intuitif ...
+
+Bref, c'est pas trop dur de faire mieux ... Ah et n'oublions pas le super algorithme qui fait un plan de remboursement. Sérieusement j'ai
+ cru qu'ils avaient réfléchi et trouvé un super algorithme. Bah en fait non :p
+
+### Mouais mais bon si c'est juste pour refaire une appli en plus joli je vois pas vraiment le but ...
+
+C'est bien vrai ! Mais ce que j'aimerais faire c'est une synchronisation entre plusieurs téléphones sur un même événement, et ça Tricount ne le
+ permet pas du tout  ! Je veux dire par là que tu crée un événement, tu envoies des invitations, et paf tous les téléphones de tes potes peuvent
+ rajouter des dépenses et tout est synchronisé automatiquement !
+
+### La synchronisation ? Mouais chez les frenchies on sais pas trop faire mais mon cousin qui est allé en Angleterre m'a montrer un super truc : Splitwise. C'est pas pareil que toi ?
+
+Ciel, tu es bien informé ! Et bien oui les anglais (c'est ptet des ricains j'ai pas fait gaffe) sont très forts. Et ils ont fait une belle usine à 
+gaz, qui fonctionne pas trop mal !
+
+Bon par contre y'a quelques trucs qui me dérangent un peu dans tout ça :
+
+- C'est en anglais : j'en connais qui ont du mal
+- Faut ouvrir un compte ? Moi je veux juste mettre des dépenses parce que je vais pas payer les bières tout seul ...
+- Quoi quand j'ajoute des amis faut que je donne leur mail sinon ça veut pas ?
+- Wat? faut que mes amis ouvrent aussi un compte ? Nan mais c'est quoi ce bordel ? Moi je veux un truc **simple**
+
+Et ensuite, c'est très orienté IOUs comme truc. **C'est quoi un IOU ?** C'est une dette entre Franck et Jack, donc c'est le genre de petites dettes 
+du quotidien quand un pote t'avance un peu d'argent pour le cinéma. Mais quand on est tous dans un événement commun en règle général on mutualise 
+toutes les dépenses, et réfléchir en A doit X à B ne veut plus rien dire ...
+
+Bon par contre ils viennent de mettre à jour leur appli et elle est jolie, quoique un peu compliquée. Ah et si vous avez pas de réseau, passez votre
+ chemin, ça marche pas, on peut pas ajouter de dépenses. Ça me fait penser à un WE dans le nord où y'avait pas de réseau ... Ou à mon WE à Prague où 
+ j'avais pas de 3G ... Bref, c'est vite un peu compliqué pour rien.
+
+### Bon okay, t'es pas un peu de mauvaise fois là ?
+
+Si, un peu ^^ Mais bon faut bien appuyer là où ça fait mal, et ces deux applis quoique bien appréciées du grand public ne sont pas vraiment faites pour 
+ce que je vise vraiment : le week end / vacances entre potes.
+
+Et ce que je veux faire c'est apporter une synchro en temps réel pour que tout le monde puisse saisir les dépenses sans que ça doivent être fait sur un 
+seul téléphone. Et pouvoir suivre les dépenses du WE au fur et à mesure aussi (genre pour répondre à la question : c'est à qui de payer la prochaine fois ?).
+
+### Et t'en es où ?
+
+Et bien, SynCount est presque finie ! J'ai commencé à voir comment mettre tout ça sur le Google Play et y'aura bientôt 2 versions de disponibles :
+
+- La première est payante et permet de créer des événement et de les synchroniser sur d'autres téléphones. Edit : [SynCount](https://play.google.com/store/apps/details?id=fr.poulpi.synchrocomptes.pro)
+- La seconde est gratuite et permet de créer des événement mais pas de les partager. Par contre tu peux participer à un évément crée sur l'appli payante de ton copain. Edit : [SynCount Lite](https://play.google.com/store/apps/details?id=fr.poulpi.synchrocomptes.free)
+
+Ainsi dans un WE il suffit qu'une seule personne ait une version payante pour pouvoir synchroniser tout le monde ! Il faut juste que ce soit celle qui crée l'événement.
+
+Pour l'instant il n'y a pas de pubs sur a version gratuite (je déteste la pub), je verrais comment les choses se portent.
+
+### Mais mais je voulais en savoir un peu plus sur la programmation Android moi !
+
+Ne t'inquiètes pas cher lecteur (ou inquiètes toi au contraire !), je vais un petit peu raconter ce que j'ai fait avec cette appli et en quoi j'ai essayé 
+de faire un truc stylé ! Dans le prochain billet ... #cliffangherDeFolie
+
+PS : J'ai pas mal trashé le graphisme de Tricount dans ce post. Je me sens mal. Du coup je propose une petite comparaison rapide pour se remémorer les heures
+ les plus noires d'Android :
+
+{:.center}
+![Miam](/img/sc_tricount_events.png)
+
+{:.center}
+![Faut avouer qu'en 1998 le gris était à la mode](/img/sc_tricount_spendings.png)

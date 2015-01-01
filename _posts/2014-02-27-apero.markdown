@@ -1,0 +1,24 @@
+---
+layout: post
+title: "Apéro?, l'appli android d'un soir"
+date: 2014-02-27 19:39
+header-img: "img/drink.jpg"
+author: "poulpi"
+---
+
+Alors cette semaine c'est les vacances, et lors des vacances en règle générale, on fait un peu n'importe quoi. La plupart des gens esayent actuellement de se casser une jambe au ski (ne me faites pas croire que ce sport n'est pas pensé dans ce seul but !), mais moi je surfe sur le site d'Ikea en buvant des bières le soir.
+
+Et c'est en buvant des bières qu'on a toujours les idées les plus inutiles (en cours de sport aussi, et quand on arrive à faire les deux c'est qu'on est devenu un vrai supporter de foot :p) ! Donc celle de la semaine dernière concernait une idée très conne : **Comment savoir si c'est bientôt l'heure de l'apéro ?**
+
+Et bien il y a maintenant une appli pour ça, et c'est moi qui l'ai codée. Donc autant dire que je me sens sale jusqu'au plus profond de mon être pour être le coupable d'une telle abomination sociale, mais bon, le **BQSR** ça marque pour la vie !
+
+Donc si tu as un téléphone Android pas trop vieux (la définition de vieux est assez vicieuse mais normalement pour le coup elle tourne sur 99% des téléphones !), l'illumination est à portée de clic pour toi : [Google play](https://play.google.com/store/apps/details?id=fr.poulpi.apero.app)
+
+### Annonce
+
+Cher lecteur, si tu m'offres une pinte de bière la prochaine fois que tu me vois, je te fais la même application mais avec le texte que tu veux (et les couleurs aussi). C'est une offre limitée aux 10 prochaines pintes que l'on m'offre ! (oui les temps son durs, je me fais offrir des bières contre du code, même TAEP ne vise pas aussi bas !).
+
+Maouw.
+
+{:.center}
+![L'abus d'alcool rend con et malade](/img/apero_screenshot.png)
