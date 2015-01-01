@@ -1,0 +1,16 @@
+# Site settings
+title: poulpiBlog
+email: contact@poulpi.fr
+description: "Un blog qui parle de châtons, de code, enfin de la vie quoi !"
+baseurl: ""
+url: "http://poulpi.fr"
+twitter_username: PoulpiP
+github_username:  PoulpiFr
+facebook_username:  synchrocomptes
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 7
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]

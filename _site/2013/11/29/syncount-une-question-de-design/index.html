@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Un blog qui parle de châtons, de code, enfin de la vie quoi !">
+
+    <title>SynCount, une question de design - poulpiBlog</title>
+
+    <link rel="canonical" href="http://poulpi.fr/2013/11/29/syncount-une-question-de-design/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- mathjax config similar to math.stackexchange -->
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+    <script type="text/javascript"
+       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poulpiBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">A propos</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/design.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>SynCount, une question de design</h1>
+                    
+                    <span class="meta">Posté par poulpi le 29/11/13</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>Comme je l’ai dit dans le message précédent, je ne suis pas vraiment une bête en matière de design … Pour autant j’aime 
+bien les belles choses et cela va commencer par les applications que j’installe sur mon téléphone.</p>
+
+<p>Donc au moment de faire SynCount, je me suis bien entendu posé la question de la réalisation d’une interface assez 
+agréable à la vue. Comme les bonnes idées ne viennent jamais seules, j’ai commencé par étudier les applications que je trouvais <em>sexy</em>.</p>
+
+<h3 id="et-alors--quest-ce-qui-en-ressort-">Et alors ? Qu’est ce qui en ressort ?</h3>
+
+<p>Et bien, il en ressort qu’il y a pas mal d’apps très moches. Mais Google a fait un effort ces derniers temps en trouvant 
+2 éléments de design que je trouve très bien :</p>
+
+<ul>
+  <li><strong>L’interface Holo avec l’ActionBar et la navigation par “Tabs” :</strong> l’ActionBar c’est cette barre en haut des application 
+où vous aller trouver le nom de l’écran et des icônes à droite qui vont vous permettre de réaliser les actions principales. 
+Et bien c’est géré en natif depuis Android 4.0+, et ça tombe bien je ne veut pas m’intérésser aux versions antérieures d’Android 
+(GingerBread est à moins de 30% de parts de marché au moment où j’écris ces lignes).</li>
+</ul>
+
+<p class="center"><img src="/img/action_bar_tabs.png" alt="Oui je l'ai piqué sur internet, et alors ? T'es toujours fier de ce que tu fais toi ? Hein ?" /></p>
+
+<ul>
+  <li><strong>L’affichage par “cards” :</strong> il s’agit du nouveau look des applis google, il y a des cartes partout ! Je prendrais l’exemple 
+de l’interface de Google Play ou de Google Now. On met le contenu dans une jolie boite qu’on appelle “card” et on épure à fond.
+Ça permet d’avoir des super listes avec des miniatures et des options tout en restant joli !</li>
+</ul>
+
+<p class="center"><img src="/img/gplay_cards.png" alt="Google, il est plus fort que toi" /></p>
+
+<p>Bon, en suivant ces deux patterns, ce n’est pas trop dur de faire une interface potable. Regardons un peu comment faire techniquement :</p>
+
+<h2 id="lactionbar-et-les-tabs">L’actionBar et les Tabs</h2>
+
+<p>Ce qui est pratique avec ces composants, c’est qu’ils sont natifs à Android. Ainsi on a naturellement une ActionBar quand on 
+débute un nouveau projet et le menu vient s’insérer à sa droite sous forme d’icônes sitôt qu’on indique lesquelles ont veut. 
+Du coup, comme tout le monde a déjà une ActionBar, il s’agit de personnaliser la sienne !</p>
+
+<h3 id="comment-faire-">Comment faire ?</h3>
+
+<p>Alors pour le choix des icônes, il faut rester très classique parce qu’il faudrait choisir celles que l’utilisateur a l’habitude de voir et 
+d’utiliser dans le reste de ses applications pour éviter qu’il ne soit perdu. Ainsi on ira en priorité puiser dans 
+l’<a href="http://developer.android.com/design/downloads/index.html">ActionBar icon pack</a>.</p>
+
+<p>Bon ok, c’est encore moins personalisé qu’avant du coup. Il ne nous reste plus qu’à jouer sur un élément : <strong>la couleur</strong> ! =)</p>
+
+<h3 id="ah-mais-comment-on-fait-pour-trouver-un-thme-de-couleur-sympa--lil-">Ah mais comment on fait pour trouver un thème de couleur sympa à l’œil ?</h3>
+
+<p>Et bien personnellement je suis assez nul pour trouver des associations de couleur qui vont bien. Mais c’est pas très grave, internet
+ est là pour ça ! Donc si vous cherchez une belle palette, <a href="https://kuler.adobe.com">Kuler</a> est là pour vous.</p>
+
+<p>Après quelques recherches dans la liste des palettes proposées par les membres on finit assez vite sur une palette sympatoche. 
+Dans mon cas ce fut celle-ci : <a href="https://kuler.adobe.com/PIE-PARTY-FOR-ALL-KULERIST!!!-color-theme-1895756/">PIE PARTY FOR ALL KULERIST!!!</a> (no comment, j’aimais bien le titre …).</p>
+
+<p>Une fois qu’on a les couleurs, il suffit de les rentrer dans ce superbe <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">outil</a> 
+et on obtient les fichiers à mettre dans le répertoire “/res/” de notre projet, et TADAAA !</p>
+
+<h3 id="les-tabs-kzaquo-">Les Tabs, kézaquo ?</h3>
+
+<p>Alors si vous avez vu une des captures que j’ai déjà posté, vous avez pu voir que j’ai mis des Tabs dans la navigation. C’est une extension 
+de l’ActionBar et il y a un tas de tutoriaux sur le net pour vous montrer comment faire (comment vous croyez que j’ai appris à le faire :p). 
+Toujours est il que ça va de paire avec l’utilisation d’un <a href="http://developer.android.com/reference/android/support/v4/view/ViewPager.html">ViewPager</a> 
+et donc de Fragments (spoilers) !</p>
+
+<h2 id="les-cards">Les Cards</h2>
+
+<p>Bon alors maintenant qu’on a une superbe ActionBar et des Tabs, il faudrait mettre des Cards pour avoir un peu de contenu. Alors malheureusement 
+les Cards ne sont pas (encore ?) une brique de base d’Android. Google se les garde pour ses applis.</p>
+
+<h3 id="oh-mais-il-faut-tout-coder--la-main-cest-super-longcompliqu-">Oh, mais il faut tout coder à la main, c’est super long/compliqué !</h3>
+
+<p>Hehe, heureusement quelqu’un l’a déjà fait ! Il existe une librairie qui s’appelle <a href="https://github.com/gabrielemariotti/cardslib">CardsLib</a> et 
+qui permet très facilement de construire ses propres Card et de les mettre dans une liste. Par contre c’est compatible uniquement sur du Android &gt;4.0+.
+Donc ça c’est le coup de grâce pour la compatibilité avec Gingerbread :(</p>
+
+<p>Cette librairie est assez jeune (la première version utilisable doit avoir 2 mois) mais bien pratique et permet du coup de faire une belle UI 
+même en étant mauvais :p</p>
+
+<p>Dans mon application j’ai dû en coder 7 :</p>
+
+<ul>
+  <li><strong>EventCard</strong> : Carte qui affiche un événement.</li>
+  <li><strong>SpendingCard</strong> : Carte qui affiche une dépense</li>
+  <li><strong>FriendCard</strong> : Carte qui affiche le nom d’un ami</li>
+  <li><strong>CumulCard</strong> : Carte qui affiche le cumul des dépenses</li>
+  <li><strong>BalanceCard</strong> : Carte qui affiche le solde de tous les participants par rapport aux autres</li>
+  <li><strong>SingleLineCard</strong> : Carte qui permet d’afficher la dépense moyenne et la somme de toutes les dépenses</li>
+  <li><strong>SolutionCard</strong> : Carte qui affiche un plan de remboursement</li>
+</ul>
+
+<h2 id="licne--logo">L’icône / Logo</h2>
+
+<p>Alors pour faire une appli Android, il lui faut une icône et un logo. Et je suis vraiment une quiche en conception graphique … Alors 
+j’ai décidé de partir sur des motifs assez simples en vectoriel (<a href="http://inkscape.org/?lang=fr">Inkscape</a> est votre ami pour ceux qui connaissent).</p>
+
+<p>Pour le motif, j’ai décidé de prendre un nuage parce qu’on envoie ses dépenses dans le cloud pour les synchroniser. Et j’aime bien les nuages.
+ Pour trouver un nuage en 
+svg : <a href="https://www.google.fr/search?q=nuage+icon+svg">cloud icon svg</a> dans Google Images et paf on prend un nuage. Easy.</p>
+
+<p>Ensuite on met les couleur de notre (magnifique) palette Kuler qu’on a choisi. Et enfin tu mets les initiales de ton application pour essayer de donner du 
+cachet au tout. Dans le cas particulier, c’est SC que j’ai transformé en $€ avec la super police Calibri =).</p>
+
+<p>Au final on obtient ça :</p>
+
+<p class="center"><img src="/img/sc_logo.png" alt="I'm sexy and I know it ..." /></p>
+
+<p>Bon je fais un appel aux graphistes si vous avez un truc mieux à proposer, moi j’ai déjà atteint mes limites :p</p>
+
+<p>Dans un prochain épisode on verra comment faire pour synchroniser des dépenses dans le cloud !</p>
+
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2013/11/29/syncount/" data-toggle="tooltip" data-placement="top" title="SynCount, c'est l'histoire d'une appli Android">&larr; Billet précédent</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2013/12/06/syncount-parlons-un-peu-d-architecture-part-1-serveur/" data-toggle="tooltip" data-placement="top" title="SynCount, parlons un peu d'architecture - Serveur">Billet suivant &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/PoulpiP">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/synchrocomptes">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/PoulpiFr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; poulpiBlog 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

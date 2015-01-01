@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Un blog qui parle de châtons, de code, enfin de la vie quoi !">
+
+    <title>Python et Mandelbrot : Part III (Joli coloriage) - poulpiBlog</title>
+
+    <link rel="canonical" href="http://poulpi.fr/2014/05/28/python-et-mandelbrot-part-iii-joli-coloriage/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- mathjax config similar to math.stackexchange -->
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+    <script type="text/javascript"
+       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poulpiBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">A propos</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/coloriage.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Python et Mandelbrot : Part III (Joli coloriage)</h1>
+                    
+                    <span class="meta">Posté par poulpi le 28/05/14</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h2 id="dans-les-pisodes-prcdents-">Dans les épisodes précédents …</h2>
+
+<p>Bon alors où en est-on sur l’ensemble de Mandelbrot ? </p>
+
+<ul>
+  <li>Au début on a découvert python et on a tracé l’ensemble comme des gentils novices. Et c’était moche.</li>
+  <li>Ensuite on a parlé d’optimisation et on a utilisé la connexité de l’ensemble pour éviter des calculs.  Et c’était toujours moche …</li>
+</ul>
+
+<p>Qu’est-ce qui reste à voir ? </p>
+
+<ul>
+  <li>Colorier ça de manière plus choupie. </li>
+  <li>Faire un antialiasing avec du sur-échantillonnage pour devenir super sexy (dans le prochain billet)</li>
+  <li>Faite une version multi-thread pour faire tourner à fond son PC et arrêter d’attendre 30 ans pour une image (dans un prochain billet, je suis un maître du <strong>teasing</strong> dis-donc).</li>
+</ul>
+
+<h2 id="le-coloriage-version-bg">Le coloriage, version BG</h2>
+
+<h3 id="colorier-lensemble-de-mandelbrot-de-manire-continue">Colorier l’ensemble de Mandelbrot de manière continue</h3>
+
+<p>Comme vous avez pu le voir dans mes billets précédents sur le sujet, le coloriage le plus basique consiste à associer une couleur par “itération d’échappement”. En résumé on regardait le nombre d’itérations qu’il fallait avant que le module de la suite soit supérieur à 2 et on donnait associait ce nombre d’itérations au point du plan complexe qui avait servi de $z_{0}$. Ainsi on avait des points qui divergeaient très vite (1, 2 ou 3 itérations par exemple) et d’autres qui divergeaient bien plus tard (plus de 100 itérations).</p>
+
+<p>Mais plus on s’approche de l’ensemble de Mandelbrot et plus les points divergent tard, par conséquent on a un grand nombre de couleurs différentes à la frontière de l’ensemble et c’est assez moche. De plus, on voit bien les changements de couleurs sur le graphique, et c’est pas très esthétique !</p>
+
+<p class="center"><img src="/img/mandel1.png" alt="La drogue, c'est mal." /></p>
+
+<p>Donc il va falloir trouver mieux ! Pour cela on peut par exemple prendre la formule : $t + 1 - log( log( |z| ) / log( N ) )$ où t est le nombre d’itérations après lesquelles le point a fini par diverger (1, 2, 3, …, 1000, etc.) et N est le critère qui permet de dire si le point diverge en vérifiant $|z|&gt;N$. Si vous avez mieux, un petit commentaire ne serait pas de refus ^^</p>
+
+<p>Comme on l’a vu plus tôt (ça fait quelques mois quand même)  $N=2$ suffit à dire qu’un point va diverger, mais ici on prendra $N=\sqrt(6)$ pour que ça soit un peu plus joli (et oui ça prends plus de temps du coup :p).</p>
+
+<p>En utilisant cette formule on obtiendra un “adoucissement” des transitions entre les couleurs, et ça sera plus joli.</p>
+
+<h3 id="le-coloriage-linaire">Le coloriage linéaire</h3>
+
+<p>Maintenant qu’on a obtenu une formule permettant de ne plus avoir une matrice remplie de nombres entiers mais de nombres répartis de manière continue, il faut voir comment les colorier. Pour cela on va prendre 2 couleurs, en associer une à la valeur la plus basse de la matrice et l’autre à la valeur la plus haute. Et toutes les valeurs entre les deux vont être coloriée de manière linéaire en fonction de leur valeur.</p>
+
+<p>Pour les gens un peu plus matheux, on va en fait faire 3 régression linéaires sur les trois composantes R, G et B des deux couleurs (celle associée à la valeur la plus basse et celle associée à la valeur la plus haute) et donc on va trouver 3 fonctions affines qui vont donner la valeur des composantes R, G et B en fonction de la valeur d’un point.</p>
+
+<p class="center"><img src="/img/mandel_lin_0aa_500.png" alt="J'ai vomi." /></p>
+
+<p>Bon là on est forcé de penser que c’est bien sympa d’avoir adoucit les couleurs mais qu’on voit pas grand chose… D’où cela vient-il ? Et bien en fait sur cette image j’ai choisi un nombre de 500 itérations avant de considérer qu’un point n’ayant pas divergé est bien dans l’ensemble. Ce qui signifie que je vais avoir des valeurs assez élevées à la frontière de l’ensemble (genre 500 en fait :p), mais pour très peu de points …</p>
+
+<p>Donc notre régression linéaire conduit à une image très moche étant donné que la couleur associée à la valeur maximale (ici le jaune) ne sera donnée qu’à un très petit nombre de points, tous les autres points étant certes beaucoup plus nombreux mais ayant une valeur beaucoup plus petite en comparaison et des variations de valeur minimes entre eux.</p>
+
+<p>On pourrait essayer d’arranger le coup en limitant la variation de valeurs en mettant un nombre d’itérations maximal beaucoup plus faible pour que les inégalités de valeurs entre les points ne soient pas si flagrantes. Par contre on perd beaucoup en précision :( C’est ce qui est fait ici en prenant 50 comme nombre d’itérations maximal :</p>
+
+<p class="center"><img src="/img/mandel_lin_0aa_50.png" alt="I'm blurpy and I like it." /></p>
+
+<h3 id="le-coloriage-par-histogramme">Le coloriage par histogramme</h3>
+
+<p>Comme on a vu, il y a un problème à cause du petit nombre de points qui ont une très grande valeur (à la frontière). Pour colorier de manière plus équilibrée il va falloir tenir compte du nombre de points dans certains intervalles pour être capable de dire si une variation de valeur doit être répercutée en une grande variation de couleur ou pas.</p>
+
+<p>Je m’explique : on a beaucoup de points ayant une valeur assez faible dont les variations entre elles ne sont pas très grandes en absolu par rapport aux points à côté de la frontière qui sont pourtant eux beaucoup moins nombreux. On va donc pondérer les variations de valeurs avec le volume de points dans l’intervalle pour plus mettre en évidence les petites variations là où il y a beaucoup de points que les grandes variations là où il y a très peu de points.</p>
+
+<p>Pour cela on commence par répartir les valeurs de notre matrice en intervalles de longueur égales pour voir comment elles sont réparties.</p>
+
+<p class="center"><img src="/img/histogram.png" alt="J'y ai au moins passé 1h de R&amp;D alors on se moque pas !" /></p>
+
+<p>Donc comme on peut le voir on a beaucoup plus de points ayant une valeur entre 0 et 50 ! Il s’agit maintenant de prendre ça en compte au moment de colorier l’image. L’idée est de pondérer les variations de couleurs par rapport à la proportions de points dans les intervalles.</p>
+
+<p>Donc on calcule la variation globale de la composante R de la couleur par exemple. Ensuite on remarque qu’il y a 90% des points dans l’intervalle [0..50], donc on va dire que ces points là vont être répartis sur 90% de la variation totale de couleur. Donc on calcule les deux couleurs qui correspondent au début et à la fin de la variation recouverte par ces points là et on fait tout simplement une régression linéaire sur cet intervalle entre es deux couleurs pour associer une couleur aux valeurs (si t’as compris alors t’as un sérieux problème).</p>
+
+<p>On passe ensuite à l’intervalle [50..100] qui a seulement 5% des points, donc on calcule les deux couleurs correspondant à une variation de 5% de la couleur et on fait une nouvelle régression linéaire. A la fin on obtient ainsi une loi de correspondance valeur -&gt; couleur qui ressemble à ça :</p>
+
+<p class="center"><img src="/img/colorsplot.png" alt="Ce graphique rend toute sa crédibilité à ce bog. Enfin au moins j'aurais essayé." /></p>
+
+<p>On voit bien que la variation de couleurs entre 0 et 50 est bien plus importante que pour les autres ! Pour un nombre maximal d’itérations de 500 on obtient la figure suivante :</p>
+
+<p class="center"><img src="/img/mandel_hist_0aa_500.png" alt="Still ugly." /></p>
+
+<p>C’est tout pour aujourd’hui ! La prochaine fois on verra comment faire de l’antialiasing pour rendre tout ça plus joli. Petit avant-goût plus bas :p</p>
+
+<p>Ah et je mettrais le code qui correspond aussi ^^</p>
+
+<p class="center"><img src="/img/mandel_hist_9aa_500.png" alt="Aucun animal n'a été blessé au cours de la génération de cette fractale. Enfin officiellement." /></p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2014/05/12/ceci-n-est-pas-une-pipe/" data-toggle="tooltip" data-placement="top" title="Ceci n'est pas une pipe">&larr; Billet précédent</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2014/07/28/valeur-ajoutee/" data-toggle="tooltip" data-placement="top" title="Valeur ajoutée">Billet suivant &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/PoulpiP">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/synchrocomptes">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/PoulpiFr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; poulpiBlog 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>
