@@ -2,7 +2,7 @@
 layout: post
 title: "Monster (Munch)"
 date: 2013-06-13 23:03
-header-img: "img/kitten.jpg"
+header-img: "img/monster.jpg"
 author: "poulpi"
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Mandelbrot et Python : Part II (Optimisation)"
 date: 2013-07-02 20:48
-header-img: "img/monkey_thinking.jpg"
+header-img: "img/thinker.jpg"
 author: "poulpi"
 ---
 

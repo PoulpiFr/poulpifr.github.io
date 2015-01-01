@@ -2,7 +2,7 @@
 layout: post
 title: "Carmageddon"
 date: 2013-07-22 23:54
-header-img: "img/auto_ecole.jpg"
+header-img: "img/tracteur.jpg"
 author: "poulpi"
 ---
 

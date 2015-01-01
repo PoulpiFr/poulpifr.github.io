@@ -2,7 +2,7 @@
 layout: post
 title: "Valeur ajoutée"
 date: 2014-07-28 22:00
-header-img: "img/rail_banner.jpg"
+header-img: "img/change_the_world.jpg"
 author: "poulpi"
 ---
 

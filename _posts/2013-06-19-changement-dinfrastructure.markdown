@@ -2,7 +2,7 @@
 layout: post
 title: "Changement d'infrastructure"
 date: 2013-06-19 11:38
-header-img: "img/kitten.jpg"
+header-img: "img/infrastructure.jpg"
 author: "poulpi"
 ---
 
