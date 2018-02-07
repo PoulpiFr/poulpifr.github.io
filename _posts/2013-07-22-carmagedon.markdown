@@ -31,7 +31,7 @@ Et là on vous explique les règles :
 
 Beaucoup de gens trouvent que ce jeux est trop violent. Je réfute, si quelque chose est à lui reprocher, c'est qu'il est trop **réaliste**.
 
-##La morale de cette histoire, la rirette, la rirette&nbsp;♫
+## La morale de cette histoire, la rirette, la rirette&nbsp;♫
 
 Avec *Carmageddon*, c'est la vie qui est ainsi représentée. Tu es peinard dans ta bagnole avec sa belle carrosserie qui sort tout 
 droit de chez le garagiste, et là, la vie commence. Alors déjà, y'a un compteur de temps. Oui la vie c'est comme tout les bons concerts 
