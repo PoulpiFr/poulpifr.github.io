@@ -6,7 +6,7 @@ header-img: "img/wood.jpg"
 author: "poulpi"
 ---
 
-##Ikea ou le meuble fait expérience
+## Ikea ou le meuble fait expérience
 
 Tout le monde connaît IKEA. Que ça soit au travers de son propre déménagement ou de celui d'un pote, je ne connais personne
  qui n'a pas eu un jour la joie de manipuler du meuble suédois en kit. En tout cas j'en connais moins qui ont manipulé de la suédoise...
@@ -30,7 +30,7 @@ Il ne te reste plus qu'à passer au niveau supérieur, le voyage. Parce qu'on ne
 avec au choix, une voiture chargée comme un char leclerc asthmatique ou avec une camionnette qui te coûte un rein au kilomètre.
  Bien sûr il faut monter toutes ces jolies caisses dans ta spacieuse demeure (le spacieux c'est avant les cartons, hein).
 
-##Ikea ou la terraformation moderne 
+## Ikea ou la terraformation moderne 
 
 Car voilà la vraie raison pour laquelle tu es allé acheter une demi sterre de bois aggloméré découpée en de vicieuses petites 
 pièces : tu as un nouvel endroit où vivre, et tant qu'il n'y a pas d'IKEA, il te semble désespérément et irrémédiablement vide. 
@@ -42,7 +42,7 @@ d'avoir ça avec des meubles standards, tu vas rire !). Donc dès que tu emména
  petit chez toi avec du mobilier préfabriqué qui est vendu à des millions d'exemplaires. Car quand tu penses avoir trouvé le superbe
  assortiment de Billy, Pax et de Kompact, tu te trompes lourdement, ça fait déjà 3 ans que tout les gens cools l'ont chez eux.
 
-##Ikea ou le challenge technique
+## Ikea ou le challenge technique
 
 Bien sûr il serait malhonnête de parler d'IKEA sans mentionner l'esprit tordu de ses designers. Il est dit que si on avait envoyé une
  équipe d'ingés de chez IKEA dans le [Cube](http://www.imdb.com/title/tt0123755/), ils en seraient sortis en moins de temps qu'il n'en faut pour manger un paquet de Daims. Ils
