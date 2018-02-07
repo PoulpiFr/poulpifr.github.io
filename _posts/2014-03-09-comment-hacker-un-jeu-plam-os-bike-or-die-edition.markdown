@@ -120,7 +120,7 @@ On est bien retombé sur notre code hexa pour notre **BEQ** ! Du coup on trouve 
 
 Donc vous l'aurez compris, pour hacker le jeu, on va aller changer le 0x6712 à la ligne 00043304 (cf la première colonne du code mis plus haut) pour le remplacer par 0x6612. Pour cela on ouvre n'importe quel éditeur hexadécimal et on charge le fichier du jeu. End of story. 
 
-##Conclusion 
+## Conclusion 
 
 Tout ça pour ça vous allez me dire. Mais en changeant un 7 en 6 au bon endroit, on hacke le système de protection d'un jeu. Moi je trouve ça pas mal ! 
 
