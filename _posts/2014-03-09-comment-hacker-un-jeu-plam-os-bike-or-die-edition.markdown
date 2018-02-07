@@ -7,7 +7,7 @@ author: "poulpi"
 ---
 
 ## Contexte 
-Le soleil est revenu et il n'y a rien de tel qu'un bain de soleil pour faire le plein d'idées =) Ainsi j'ai trouvé mon prochain projet qui devrait m'occuper quelques soirées ^^
+Le soleil est revenu et il n'y a rien de tel qu'un bain de lumière pour faire le plein d'idées =) Ainsi j'ai trouvé mon prochain projet qui devrait m'occuper quelques soirées ^^
 
 En fait je suis récemment retombé sur une pépite de mon adolescence : le jeu **Bike or Die** que j'avais sur ma [**Tapwave Zodiac**](http://en.wikipedia.org/wiki/Tapwave_Zodiac), et il déchirait ! Ce qui faisait la force du jeu, en plus de son gameplay à la fois fun et frustrant, c'était son éditeur de niveaux qui a permis à de nombreux joueurs de créer eux mêmes leurs packs de cartes.
 
