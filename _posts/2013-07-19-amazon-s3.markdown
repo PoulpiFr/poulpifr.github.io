@@ -11,7 +11,7 @@ fait succombé à l'essai de CloudFare comme CDN, *poulpiBlog* est maintenant da
 
 Reprenons dès le début pour les moins technophiles d'entre vous :
 
-##C'est quoi Octopress ?
+## C'est quoi Octopress ?
 
 Alors c'est le moteur de ce blog. C'est un ensemble de scripts Ruby (un langage assez nouveau qui a l'air à la mode) qui permet 
 de faire rapidement des pages HTML d'un blog à partir de fichiers texte.
@@ -19,7 +19,7 @@ de faire rapidement des pages HTML d'un blog à partir de fichiers texte.
 En gros j'écris un billet dans le bloc note, je fais tourner le programme sur mon PC et paf j'ai les fichiers HTML tout beaux 
 tout propres. On peut bien sûr s'amuser à changer le code du programme pour qu'il fasse un blog plus stylé et c'est ce que j'ai fait en rajoutant les smileys et en améliorant le design.
 
-###Mais en quoi c'est différent des autres moteurs de blogs en fait ?
+### Mais en quoi c'est différent des autres moteurs de blogs en fait ?
 
 Alors les autres moteurs de blogs vont avoir besoin de stocker les textes des billets dans des bases de données et vont générer 
 les fichiers HTML à chaque visite en fonction de la base de données. C'est sympa mais c'est lourd pour le serveur qui refait pas mal de fois la même chose en fait.
@@ -29,7 +29,7 @@ Si on veut mettre un blog sur un raspberry Pi, c'est pas le bon plan : le Pi fau
 Bon sauf que en fait c'est un peu compliqué à mettre en place et à customiser donc c'est pour ça que y'a presque que des codeurs
  qui utilisent Octopress. Les non-geeks iront sur Tumblr ou sur des hébergeurs de Wordpress.
  
-###Et comment tu héberges tes pages HTML ?
+### Et comment tu héberges tes pages HTML ?
 
 Alors pour héberger des pages HTML c'est très simple, n'importe quel serveur peut le faire. 
 
@@ -55,7 +55,7 @@ la vie (genre coupure d'électricité). C'est comme ça que *poulpi.fr* a tourn�
 	c'est la même chose, on paye à la consommation. Donc si tu as 3 visiteurs, tu ne payes quasi rien (moins d'un euro par mois). Si tu en as 15 000 tu payes plus cher. C'est génial
 	pour les petits sites qui n'ont pas budget, et c'est génial pour les boites ou les start up qui n'ont pas à avoir peur de leur croissance.
 
-##Le cloud, c'est sympa.
+## Le cloud, c'est sympa.
 
 Prenons un site WEB assez connu : Facebook. Lors de sa création il y avait peut être 500 inscrits et 100 visiteurs journaliers. Aujourd'hui 
 on compte en centaines de millions. Entre temps il a fallu acheter pleins de serveurs de plus en plus puissants, arriver à les paramétrer, à construire des
@@ -65,7 +65,7 @@ Si Facebook avait été sur le cloud, c'est les gérants du cloud qui auraient g
 
 C'est en ça que le cloud c'est sympa.
 
-##Mais c'est qui le cloud ?
+## Mais c'est qui le cloud ?
 
 Bon vous l'avez compris, un cloud c'est avant tout pleins de PCs dans un grand batiment. Et qui a pleins de PCs dans des grands batîments ? Les grosses boites informatiques.
 
@@ -75,7 +75,7 @@ laissent mettre n'importe quoi dessus.
 
 Alors j'ai choisi Amazon parce que c'est le plus documenté sur internet.
 
-##Amazon, mais qui est dessus ?
+## Amazon, mais qui est dessus ?
 
 Est ce que vous connaissez Dropbox ? Sans doute. Dropbox stocke tout chez Amazon. Comme ça pas de peur d'arriver à la fin du disque dur et de devoir en 
 acheter un nouveau pour Dropbox, c'est Amazon qui gère ça.
@@ -89,7 +89,7 @@ Donc en gros Dropbox double les prix d'Amazon. Et qu'est ce qu'ils offrent d epl
 
 Bon dans les gros clients d'Amazon on va retrouver Twitter, Tumblr, 9gag, etc. Bref tout els gros sites qui ne veulent pas acheter pleins de serveurs.
 
-##Amazon, comment ça marche
+## Amazon, comment ça marche
 
 Alors on commence par se créer un compte. Direct on sent que c'est très pro. On commence par te demander si tu es une société pour savoir si on te met 
 la TVA. Ensuite pour vérifier ton numéro, on t'appele sur ton portable. Non, pas de SMS, on t'appelles pour de vrai et on te demande un code qui s'affiche
@@ -109,7 +109,7 @@ Bon très vite on arrive au choix de la multitude de services proposés. Y'en a 
 Mais pour héberger des fichiers, c'est avec Amazon S3 qu'il faut voir (c'est le service de stockage). Donc on y va. On nous demande de faire un "bucket",
  ok. Et paf on peux rajouter des fichiers dedans ! Avec une gestion fine des permissions (pour le blog tout le monde a les droits en lecture).
 
-##Bon, comment on fait automatiser tout ça ?
+## Bon, comment on fait automatiser tout ça ?
 
 Alors oui, ce que j'aimerais c'est qu'à chaque déploiement du site je n'ai pas à rajouter les fichiers à la main. Pour ça il y a un équivalent à rsync 
 nommé s3cmd qui a été codé par la communauté. J'ai essayé la version 1.5 et elle ne fonctionnait pas, donc au final je tourne en version 1.0 (elle a 2 ans mais elle marche !).
