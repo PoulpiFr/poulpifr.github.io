@@ -16,6 +16,4 @@ Le seul problème de cet outil de travail que tout parisien travaillant assidûm
 
 L'exception qui confirme la règle sera bien entendu le personnage unique en son genre qu'est James Bond : le mec qui sauve le monde en courant derrière les gros vilains sans quitter son magnifique costume et tout en gardant son flegme tout britannique. Parce que sur le papier, James pourrait bien exister ! Une fois qu'on repasse chacun de ses exploits physique et intellectuel, on ne peut pas s'empêcher de se dire qu'au final ce n'est pas excessif. Il faut tout juste avoir une appétence toute particulière pour les gros lasers et les belles femmes (fatales). Seulement voilà, Bond, James Bond fait tout ça en costard cravate ... Et c'est là que le personnage se révèle rester de fiction.
 
-Il est vrai que les hommes (et femmes, coucou Ni putes Ni soumises !) ayant sauvé le monde ont le plus souvent porté un magnifique ensemble blanc et noir, mais ce fut rarement au bout de leurs points qu'ils eurent le plus d'effet.
-
-Et c'est comme ça que je vais conclure ce billet. Oui je reprends doucement après une looongue pause et j'ai pas pris un sujet facile alors cher lecteur soit un peu indulgent, s'il te plaît. En plus il est tard. Et je suis claqué (en fait non).
+Et c'est comme ça que je vais conclure ce billet. Oui je reprends doucement après une looongue pause et j'ai pas pris un sujet facile alors cher lecteur soit un peu indulgent, s'il te plaît. En plus il est tard.
